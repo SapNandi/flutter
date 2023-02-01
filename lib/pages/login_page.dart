@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:project1/utils/routes.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  String name = "";
+  bool flag = false;
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -22,10 +30,11 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 20,
               ),
-              const Text(
-                "Welcome",
+              Text(
+                "Welcome $name",
+                // ignore: prefer_const_constructors
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -40,6 +49,10 @@ class LoginPage extends StatelessWidget {
                     TextFormField(
                       decoration: const InputDecoration(
                           hintText: "Enter username", labelText: "Username"),
+                      onChanged: (value) {
+                        name = value;
+                        setState(() {});
+                      },
                     ),
                     TextFormField(
                       obscureText: true,
@@ -49,18 +62,51 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(
                       height: 30,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
+                    InkWell(
+                      onTap: () async {
+                        setState(() {
+                          flag = true;
+                        });
+                        await Future.delayed(Duration(milliseconds: 600));
                         Navigator.pushNamed(context, MyRoutes.homeRoute);
                       },
-                      style: TextButton.styleFrom(minimumSize: const Size(120, 40)),
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 15,
+                      child: AnimatedContainer(
+                        duration: Duration(milliseconds: 600),
+                        width: flag ? 50 : 120,
+                        height: flag ? 50 : 45,
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.indigo,
+                          borderRadius: BorderRadius.circular(flag ? 25 : 8),
                         ),
+                        child: flag
+                            ? const Icon(
+                                Icons.done,
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                "Login",
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
                       ),
                     )
+
+                    // ElevatedButton(
+                    //   onPressed: () {
+                    //     Navigator.pushNamed(context, MyRoutes.homeRoute);
+                    //   },
+                    //   style: TextButton.styleFrom(
+                    //       minimumSize: const Size(120, 40)),
+                    //   child: const Text(
+                    //     "Login",
+                    //     style: TextStyle(
+                    //       fontSize: 15,
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               )
