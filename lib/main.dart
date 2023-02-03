@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
           // brightness: Brightness.dark -->Overrides swatch colors
           primarySwatch: Colors.amber),
-      // initialRoute: "/home", // This is the initial route that will open in app open
+      debugShowCheckedModeBanner: false,
+      initialRoute: "/home", // This is the initial route that will open in app open
       routes: {
         "/": (context) => LoginPage(),
         MyRoutes.homeRoute: (context) => HomePage(),
